@@ -46,12 +46,14 @@ public class Main {
                 key.weiter();
             }
         }
-
-
+        pen.bewegeUm(30);
         boolean win = pen.vPosition() <= targetY + 35 && pen.vPosition() >= targetY - 35;
+        int points = win ? 35 - Math.abs((int)(targetY - pen.vPosition())) : 0;
+        int percentage = (points * 100) / 35;
+        pen.bewegeUm(-30);
         drawTarget();
         end();
-        writeMid(win ? "Win" : "Fail");
+        writeMid(win ? "Win" : "Fail", percentage);
     }
 
     public void drawDart() {
@@ -89,12 +91,12 @@ public class Main {
         pen.hoch();
     }
 
-    public void writeMid(String text) {
+    public void writeMid(String text, int points) {
+        text = text + ": " + points + " p.";
         Buntstift writePen = new Buntstift();
         writePen.bewegeBis(SCREEN_WIGHT / 2.0, SCREEN_HEIGHT / 2.0);
         writePen.setzeSchriftGroesse(20);
         writePen.schreibeText(text);
-        System.out.println(text);
     }
 
     public void sleep(int t){
